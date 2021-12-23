@@ -1,8 +1,8 @@
-import 'package:flame/src/collision/tuple.dart';
 import 'package:meta/meta.dart';
 
 import '../../../components.dart';
 import '../../../game.dart';
+import '../../collision/collision_item.dart';
 import '../../geometry/rectangle.dart';
 
 /// The [CollidableType] is used to determine which other type of [Collidable]s
@@ -19,6 +19,9 @@ enum CollidableType {
 }
 
 mixin Collidable on HasHitboxes implements CollisionItem<Collidable> {
+  // TODO(spydon): Too expensive to have a set in each item?
+  final Set<Collidable> activeCollisions = {};
+
   @override
   Aabb2 get aabb => super.aabb;
 
@@ -29,10 +32,16 @@ mixin Collidable on HasHitboxes implements CollisionItem<Collidable> {
   void onCollision(Set<Vector2> intersectionPoints, Collidable other) {}
 
   @override
-  void onCollisionStart(Set<Vector2> intersectionPoints, Collidable other) {}
+  @mustCallSuper
+  void onCollisionStart(Set<Vector2> intersectionPoints, Collidable other) {
+    activeCollisions.add(other);
+  }
 
   @override
-  void onCollisionEnd(Collidable other) {}
+  @mustCallSuper
+  void onCollisionEnd(Collidable other) {
+    activeCollisions.remove(other);
+  }
 
   @override
   void onRemove() {
