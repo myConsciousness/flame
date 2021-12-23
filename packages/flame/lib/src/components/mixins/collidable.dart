@@ -52,6 +52,7 @@ mixin Collidable on HasHitboxes implements CollisionItem<Collidable> {
     super.onRemove();
   }
 
+  // TODO(spydon): remove?
   @override
   @mustCallSuper
   void prepare(Component parent) {
