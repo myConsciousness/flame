@@ -94,7 +94,7 @@ class Polygon extends Shape {
 
   /// Gives back the shape vectors multiplied by the size
   Iterable<Vector2> localVertices() {
-    final center = localCenter;
+    final center = this.center;
     if (!_cachedLocalVertices.isCacheValid([size, center])) {
       final halfSize = this.halfSize;
       for (var i = 0; i < _localVertices.length; i++) {
@@ -118,15 +118,12 @@ class Polygon extends Shape {
     final totalAngle = absoluteAngle;
     if (!_cachedGlobalVertices.isCacheValid<dynamic>(<dynamic>[
       position,
-      offsetPosition,
-      relativeOffset,
       size,
       scale,
       absoluteAngle,
     ])) {
       var i = 0;
       final center = absoluteCenter;
-      final halfSize = this.halfSize;
       for (final normalizedPoint in normalizedVertices) {
         _globalVertices[i]
           ..setFrom(normalizedPoint)
@@ -141,23 +138,15 @@ class Polygon extends Shape {
         // become counterclockwise.
         _reverseList(_globalVertices);
       }
-      _cachedGlobalVertices.updateCache<dynamic>(_globalVertices, <dynamic>[
-        position.clone(),
-        offsetPosition.clone(),
-        relativeOffset.clone(),
-        size.clone(),
-        scale.clone(),
-        totalAngle
-      ]);
+      _cachedGlobalVertices.updateCache<dynamic>(_globalVertices,
+          <dynamic>[position.clone(), size.clone(), scale.clone(), totalAngle]);
     }
     return _cachedGlobalVertices.value!;
   }
 
   @override
   void render(Canvas canvas) {
-    if (!_cachedRenderPath.isCacheValid([
-      offsetPosition,
-      relativeOffset,
+    if (!_cachedRenderPath.isCacheValid<dynamic>(<dynamic>[
       size,
       angle,
     ])) {
@@ -171,8 +160,6 @@ class Polygon extends Shape {
           ..reset()
           ..addPolygon(_renderVertices, true),
         <dynamic>[
-          offsetPosition.clone(),
-          relativeOffset.clone(),
           size.clone(),
           angle,
         ],
