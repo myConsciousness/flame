@@ -24,7 +24,7 @@ class GameStatsController extends Component
 }
 
 class SpaceShooterGame extends FlameBlocGame
-    with PanDetector, HasCollidables, HasKeyboardHandlerComponents {
+    with PanDetector, HasCollisionDetection, HasKeyboardHandlerComponents {
   late PlayerComponent player;
 
   @override
