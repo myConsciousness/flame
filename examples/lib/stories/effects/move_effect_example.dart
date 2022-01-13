@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/game.dart';
+import 'package:flame/geometry.dart';
 import 'package:flutter/material.dart';
 
 class MoveEffectExample extends FlameGame {
@@ -33,7 +34,7 @@ class MoveEffectExample extends FlameGame {
       ..color = Colors.greenAccent;
 
     add(
-      RectangleComponent.square(
+      Rectangle.square(
         position: Vector2(20, 50),
         size: 20,
         paint: paint1,
@@ -50,7 +51,7 @@ class MoveEffectExample extends FlameGame {
         ),
     );
     add(
-      RectangleComponent.square(
+      Rectangle.square(
         position: Vector2(20, 150),
         size: 20,
         paint: paint2,
@@ -88,7 +89,7 @@ class MoveEffectExample extends FlameGame {
     }
     for (var i = 0; i < 40; i++) {
       add(
-        CircleComponent(radius: 5)
+        Circle(radius: 5)
           ..position = Vector2(0, -1000)
           ..add(
             MoveAlongPathEffect(
@@ -107,7 +108,7 @@ class MoveEffectExample extends FlameGame {
     final path2 = Path()..addOval(const Rect.fromLTRB(80, 230, 320, 470));
     for (var i = 0; i < 20; i++) {
       add(
-        RectangleComponent.square(size: 10)
+        Rectangle.square(size: 10)
           ..paint = (Paint()..color = Colors.tealAccent)
           ..add(
             MoveAlongPathEffect(
